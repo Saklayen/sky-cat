@@ -1,4 +1,4 @@
-package com.gs.skycatnews.base
+package com.gs.skycatnews.base.ui
 
 import android.os.Build
 import android.os.Bundle

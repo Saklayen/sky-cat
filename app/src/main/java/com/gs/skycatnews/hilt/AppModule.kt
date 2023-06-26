@@ -1,6 +1,6 @@
 package com.gs.skycatnews.hilt
 
-import com.gs.skycatnews.base.ActivityScreenSwitcher
+import com.gs.skycatnews.base.ui.ActivityScreenSwitcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

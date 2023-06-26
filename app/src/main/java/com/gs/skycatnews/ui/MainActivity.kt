@@ -1,7 +1,8 @@
-package com.gs.skycatnews
+package com.gs.skycatnews.ui
 
 import android.os.Bundle
-import com.gs.skycatnews.base.BaseActivity
+import com.gs.skycatnews.R
+import com.gs.skycatnews.base.ui.BaseActivity
 import com.gs.skycatnews.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

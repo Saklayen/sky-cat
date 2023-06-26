@@ -1,4 +1,4 @@
-package com.gs.skycatnews.base
+package com.gs.skycatnews.base.ui
 
 import android.app.Activity
 import android.content.Context
