@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.gs.skycatnews.ui.newslist.NewsListViewModel" />
+
+        <variable
+            name="item"
+            type="com.gs.skycatnews.domain.models.Feed" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_tiny"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:elevation="5dp"
+        android:padding="@dimen/spacing_small"
+        android:visibility="@{item.type.equals(`advert`) ? View.GONE : View.VISIBLE}">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/feed_image"
+            loadImage="@{item.teaserImage.toString()}"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/spacing_small"
+            android:scaleType="fitXY"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="2dp" />
+
+        <TextView
+            android:id="@+id/headline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingTop="@dimen/spacing_tiny"
+            android:paddingEnd="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_tiny"
+            android:text="@{item.headline}"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/feed_image"
+            app:layout_constraintTop_toTopOf="@id/feed_image"
+            tools:text="Headline" />
+
+        <TextView
+            android:id="@+id/teaser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:layout_marginEnd="@dimen/spacing_tiny"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingTop="@dimen/spacing_tiny"
+            android:paddingEnd="@dimen/spacing_small"
+            android:paddingBottom="@dimen/spacing_tiny"
+            android:text="@{item.teaserText}"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/headline"
+            app:layout_constraintTop_toBottomOf="@id/headline"
+            tools:text="Teaser text" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/teaser"
+            app:layout_constraintStart_toStartOf="@id/teaser"
+            app:layout_constraintBottom_toBottomOf="@id/feed_image"  />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

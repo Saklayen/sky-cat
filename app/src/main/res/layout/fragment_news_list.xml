@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -40,12 +41,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/spacing_tiny"
-            android:layout_marginTop="@dimen/spacing_small"
             android:background="@color/white"
             android:elevation="5dp"
             android:fillViewport="true"
-            android:padding="@dimen/spacing_small"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.constraintlayout.widget.Guideline
@@ -75,6 +73,42 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_end="@dimen/activity_horizontal_margin" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/banner"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:scaleType="fitXY"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                loadImage="@{viewModel.firstImageUrl}"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/headline"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintTop_toBottomOf="@id/banner"
+                android:text="@{viewModel.firstHeadline}"
+                android:textSize="22sp"
+                android:textColor="@color/teal_700"
+                tools:text="@string/app_name"
+                android:textStyle="bold"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/news_list_recyclerview"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/spacing_normal"
+                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
+                app:layout_constraintEnd_toEndOf="@id/end_guideline"
+                app:layout_constraintStart_toStartOf="@id/start_guideline"
+                app:layout_constraintTop_toBottomOf="@id/headline"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                bindNewsListViewModel="@{viewModel}"
+                bindDataList="@{viewModel.newsFeed.data.feeds}"
+                app:spanCount="2"
+                tools:itemCount="10"
+                tools:listitem="@layout/feed_item" />
 
 
 

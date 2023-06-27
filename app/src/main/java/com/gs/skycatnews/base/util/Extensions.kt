@@ -1,6 +1,9 @@
 package com.gs.skycatnews.base.util
 
 import android.app.Activity
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -37,3 +40,9 @@ fun FragmentActivity.findNavControllerByFragmentContainerView(@IdRes viewId: Int
     val navHostFragment = this.supportFragmentManager.findFragmentById(viewId) as NavHostFragment
     return navHostFragment.navController
 }
+
+val Context.layoutInflater: LayoutInflater
+    get() = LayoutInflater.from(this)
+
+val View.layoutInflater: LayoutInflater
+    get() = this.context.layoutInflater
