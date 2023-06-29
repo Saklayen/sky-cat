@@ -3,7 +3,7 @@ package com.gs.skycatnews.domain.repositories
 import com.gs.skycatnews.api.ApiService
 import com.gs.skycatnews.api.NetworkResource
 import com.gs.skycatnews.domain.Result
-import com.gs.skycatnews.domain.models.NewsFeed
+import com.gs.skycatnews.domain.models.StoryDetails
 import com.gs.skycatnews.hilt.IoDispatcher
 import com.gs.skycatnews.utils.ControlledRunner
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,12 +16,12 @@ class StoryDetailsRepository @Inject constructor(
     @IoDispatcher val dispatcher: CoroutineDispatcher,
     val apiService: ApiService
 ) {
-    private val controlledRunner = ControlledRunner<Flow<Result<NewsFeed>>>()
+    private val controlledRunner = ControlledRunner<Flow<Result<StoryDetails>>>()
 
-    suspend fun fetchStory(id: String): Flow<Result<NewsFeed>> {
+    suspend fun fetchStoryDetails(id: Int): Flow<Result<StoryDetails>> {
         return controlledRunner.cancelPreviousThenRun {
-            object : NetworkResource<NewsFeed>(dispatcher) {
-                override suspend fun createCall() = apiService.fetchStory(id)
+            object : NetworkResource<StoryDetails>(dispatcher) {
+                override suspend fun createCall() = apiService.fetchStoryDetails(id)
             }.asFlow()
         }
     }

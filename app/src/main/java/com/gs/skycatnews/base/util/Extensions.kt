@@ -1,6 +1,5 @@
 package com.gs.skycatnews.base.util
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.CoroutineScope
@@ -21,9 +19,8 @@ import kotlinx.coroutines.launch
 
 class EmptyClass
 
-fun Fragment.navigateUp() = this.findNavController().navigateUp()
-fun Activity.navigate(@IdRes viewId: Int, direction: NavDirections) =
-    this.findNavController(viewId).navigate(direction)
+fun Fragment.navigate(direction: NavDirections) =
+    this.findNavController().navigate(direction)
 
 inline fun Fragment.launchAndRepeatWithViewLifecycle(
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,

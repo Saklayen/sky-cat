@@ -39,7 +39,7 @@ class MockServerInterceptor @Inject constructor(
     private fun getJsonFileNameFromUrl(url: String): String? {
         return when {
             url.contains("news-list") -> "story_list.json"
-            url.contains("story") -> "story_list.json"
+            url.contains("story") -> "sample_story1.json"
             else -> null
         }
     }

@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StoryListRepository @Inject constructor(
+class NewsListRepository @Inject constructor(
     @IoDispatcher val dispatcher: CoroutineDispatcher,
     val apiService: ApiService
 ) {
@@ -21,7 +21,7 @@ class StoryListRepository @Inject constructor(
     suspend fun fetchStoryList(): Flow<Result<NewsFeed>> {
         return controlledRunner.joinPreviousOrRun {
             object : NetworkResource<NewsFeed>(dispatcher) {
-                override suspend fun createCall() = apiService.fetchStoryList()
+                override suspend fun createCall() = apiService.fetchNewsList()
             }.asFlow()
         }
     }

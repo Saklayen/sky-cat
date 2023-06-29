@@ -8,6 +8,10 @@ buildscript {
             allowInsecureProtocol = true
         }
     }
+
+    dependencies {
+        classpath('androidx.navigation:navigation-safe-args-gradle-plugin:2.6.0')
+    }
 }
 plugins {
     id 'com.android.application' version '7.4.1' apply false

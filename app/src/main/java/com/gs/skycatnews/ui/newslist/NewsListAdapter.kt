@@ -14,7 +14,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 class NewsListAdapter(val viewModel: NewsListViewModel) :
     ListAdapter<Feed, FollowersListViewHolder>(
-        UserDiffCallback()
+        NewsDiffCallback()
     ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowersListViewHolder {
         return FollowersListViewHolder(
@@ -29,7 +29,7 @@ class NewsListAdapter(val viewModel: NewsListViewModel) :
 
 
 @ExperimentalCoroutinesApi
-class FollowersListViewHolder(val binding: FeedItemBinding) :
+class FollowersListViewHolder(private val binding: FeedItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(viewModel: NewsListViewModel, data: Feed) {
         binding.viewModel = viewModel
@@ -38,7 +38,7 @@ class FollowersListViewHolder(val binding: FeedItemBinding) :
     }
 }
 
-private class UserDiffCallback : DiffUtil.ItemCallback<Feed>() {
+private class NewsDiffCallback : DiffUtil.ItemCallback<Feed>() {
     override fun areItemsTheSame(oldItem: Feed, newItem: Feed) =
         oldItem.id == newItem.id
 
@@ -53,7 +53,7 @@ fun RecyclerView.bindNewsFeedListAdapter(
     data: List<Feed>?
 ) {
     if (adapter == null) adapter = NewsListAdapter(viewModel)
-    val value = data ?: emptyList()
+    val value = data?.filter { it.type != "advert" } ?: emptyList()
     val feedListAdapter = adapter as? NewsListAdapter
     feedListAdapter?.submitList(value)
     clearDecorations()

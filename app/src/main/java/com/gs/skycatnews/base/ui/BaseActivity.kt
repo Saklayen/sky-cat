@@ -19,7 +19,7 @@ abstract class BaseActivity<T : ViewDataBinding> constructor(@LayoutRes private 
     @Inject
     lateinit var activityScreenSwitcher: ActivityScreenSwitcher
 
-    protected val binding: T by lazy(LazyThreadSafetyMode.NONE) {
+    private val binding: T by lazy(LazyThreadSafetyMode.NONE) {
         DataBindingUtil.setContentView<T>(this, mContentLayoutId)
     }
 
@@ -51,4 +51,3 @@ abstract class BaseActivity<T : ViewDataBinding> constructor(@LayoutRes private 
 
     override fun activityScreenSwitcher() = activityScreenSwitcher
 }
-

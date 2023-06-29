@@ -9,6 +9,8 @@
 
     <dimen name="width_120_dp">120dp</dimen>
     <dimen name="width_200_dp">200dp</dimen>
+    <dimen name="width_40_dp">40dp</dimen>
+    <dimen name="height_40_dp">40dp</dimen>
 
     <!-- typical spacing between two views -->
     <dimen name="spacing_big">96dp</dimen>

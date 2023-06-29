@@ -2,14 +2,16 @@ package com.gs.skycatnews.ui.newslist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gs.skycatnews.domain.Status
-import com.gs.skycatnews.domain.usecases.StoryListUseCase
+import com.gs.skycatnews.domain.models.Feed
+import com.gs.skycatnews.domain.usecases.NewsListUseCase
 import com.gs.skycatnews.utils.WhileViewSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -17,7 +19,7 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class NewsListViewModel @Inject constructor(private val storyListUseCase: StoryListUseCase) :
+class NewsListViewModel @Inject constructor(private val newsListUseCase: NewsListUseCase) :
     ViewModel() {
 
     private val fetchNewsFeed =
@@ -26,33 +28,45 @@ class NewsListViewModel @Inject constructor(private val storyListUseCase: StoryL
             onBufferOverflow = BufferOverflow.DROP_OLDEST
         )
     val newsFeed = fetchNewsFeed.flatMapLatest {
-        storyListUseCase(it)
+        newsListUseCase(it)
     }.stateIn(
         scope = viewModelScope,
         started = WhileViewSubscribed,
         initialValue = null
     )
 
-    var firstImageUrl = ""
-    var firstHeadline = ""
+    private val _navigate = Channel<NavigationAction>(Channel.CONFLATED)
+    val navigate = _navigate.receiveAsFlow()
 
     init {
         viewModelScope.launch {
             fetchStoryList()
-        }
-
-        viewModelScope.launch {
-            newsFeed.collect {
-                if (it?.status == Status.SUCCESS){
-                    firstImageUrl = it.data?.feeds?.get(0)?.teaserImage.toString()
-                    firstHeadline = it.data?.feeds?.get(0)?.headline.toString()
-                    Timber.e("storyList.firstHeadline: $firstHeadline")
-                }
-            }
         }
     }
 
     private fun fetchStoryList() {
         fetchNewsFeed.tryEmit(Unit)
     }
+
+    fun navigate(feed: Feed) {
+        when (feed.type) {
+            "weblink" -> {
+                feed.weblinkUrl?.let {
+                    Timber.e("Weblink: $it")
+                    _navigate.trySend(NavigationAction.NavigateToWebLink(it))
+                }
+            }
+
+            "story" -> {
+                feed.id?.let {
+                    _navigate.trySend(NavigationAction.NavigateToStoryDetails(it))
+                }
+            }
+        }
+    }
+}
+
+sealed class NavigationAction {
+    data class NavigateToStoryDetails(val id: String) : NavigationAction()
+    data class NavigateToWebLink(val url: String) : NavigationAction()
 }

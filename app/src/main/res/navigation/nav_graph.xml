@@ -7,20 +7,28 @@
     <fragment
         android:id="@+id/newsListFragment"
         android:name="com.gs.skycatnews.ui.newslist.NewsListFragment"
-        android:label="NewsListFragment" >
+        android:label="" >
         <action
-            android:id="@+id/navigate_from_newsListFragment_to_newsDetailsFragment"
-            app:destination="@id/newsDetailsFragment" />
+            android:id="@+id/navigate_from_newsListFragment_to_storyDetailsFragment"
+            app:destination="@id/storyDetailsFragment" />
         <action
             android:id="@+id/navigate_from_newsListFragment_to_webLinkFragment"
             app:destination="@id/webLinkFragment" />
     </fragment>
     <fragment
-        android:id="@+id/newsDetailsFragment"
-        android:name="com.gs.skycatnews.ui.newsdetails.NewsDetailsFragment"
-        android:label="NewsDetailsFragment" />
+        android:id="@+id/storyDetailsFragment"
+        android:name="com.gs.skycatnews.ui.newsdetails.StoryDetailsFragment"
+        android:label="" >
+        <argument
+            android:name="storyId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/webLinkFragment"
         android:name="com.gs.skycatnews.ui.weblink.WebLinkFragment"
-        android:label="WebLinkFragment" />
+        android:label="" >
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 </navigation>

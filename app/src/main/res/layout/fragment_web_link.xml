@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.gs.skycatnews.ui.newsdetails.NewsDetailsViewModel" />
+            type="com.gs.skycatnews.ui.weblink.WebLinkViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -31,59 +31,36 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:importantForAccessibility="yes"
-                app:layout_collapseMode="pin"
-                app:title="@string/web_link"
-                app:titleCentered="true"></com.google.android.material.appbar.MaterialToolbar>
+                app:layout_collapseMode="pin">
+            </com.google.android.material.appbar.MaterialToolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/spacing_tiny"
-            android:layout_marginTop="@dimen/spacing_small"
             android:background="@color/white"
-            android:elevation="5dp"
             android:fillViewport="true"
-            android:padding="@dimen/spacing_small"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/top_guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="@dimen/activity_vertical_margin" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/bottom_guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_end="@dimen/activity_vertical_margin" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/start_guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="@dimen/activity_horizontal_margin" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/end_guideline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="@dimen/activity_horizontal_margin" />
-
             <WebView
+                android:id="@+id/web_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@id/bottom_guideline"
-                app:layout_constraintEnd_toEndOf="@id/end_guideline"
-                app:layout_constraintStart_toStartOf="@id/start_guideline"
-                app:layout_constraintTop_toTopOf="@id/top_guideline" />
-
-
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                initializeWebView="@{viewModel}"
+                loadUrl="@{viewModel.currentUrl}"/>
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                showLoadingProgress="@{viewModel.webPageLoadingStatus}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

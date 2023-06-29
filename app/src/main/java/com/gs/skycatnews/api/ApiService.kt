@@ -1,6 +1,7 @@
 package com.gs.skycatnews.api
 
 import com.gs.skycatnews.domain.models.NewsFeed
+import com.gs.skycatnews.domain.models.StoryDetails
 import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -8,9 +9,9 @@ import retrofit2.http.Path
 interface ApiService {
 
     @GET("/story/{id}")
-    fun fetchStory(@Path("id") id: String): Flow<ApiResponse<NewsFeed>>
+    fun fetchStoryDetails(@Path("id") id: Int): Flow<ApiResponse<StoryDetails>>
 
     @GET("/news-list")
-    fun fetchStoryList(): Flow<ApiResponse<NewsFeed>>
+    fun fetchNewsList(): Flow<ApiResponse<NewsFeed>>
 
 }

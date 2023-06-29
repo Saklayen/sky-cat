@@ -1,4 +1,4 @@
-package com.gs.skycatnews.ui.weblink
+package com.gs.skycatnews.ui.newsdetails
 
 import android.os.Bundle
 import android.view.View
@@ -7,27 +7,23 @@ import androidx.navigation.fragment.navArgs
 import com.gs.skycatnews.R
 import com.gs.skycatnews.base.ui.BaseFragment
 import com.gs.skycatnews.base.util.launchAndRepeatWithViewLifecycle
-import com.gs.skycatnews.databinding.FragmentWebLinkBinding
+import com.gs.skycatnews.databinding.FragmentStoryDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import timber.log.Timber
-
 
 @AndroidEntryPoint
-class WebLinkFragment : BaseFragment<FragmentWebLinkBinding>(R.layout.fragment_web_link) {
+class StoryDetailsFragment :
+    BaseFragment<FragmentStoryDetailsBinding>(R.layout.fragment_story_details) {
 
-    private val viewModel: WebLinkViewModel by viewModels()
-    private val navArgs by navArgs<WebLinkFragmentArgs>()
-    override val haveToolbar = true
-    override val resToolbarId = R.id.toolbar
+    private val viewModel: StoryDetailsViewModel by viewModels()
+    private val navArgs by navArgs<StoryDetailsFragmentArgs>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding.viewModel = viewModel
         launchAndRepeatWithViewLifecycle {
             launch {
                 navArgs.let {
-                    Timber.e("NavArgs:-------- ${it.url}")
-                    viewModel.loadUrl(it.url)
+                    viewModel.fetchStoryDetails(it.storyId)
                 }
             }
         }

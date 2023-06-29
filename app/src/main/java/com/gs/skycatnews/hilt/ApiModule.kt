@@ -15,7 +15,6 @@ import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.mockwebserver.MockWebServer
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
@@ -42,12 +41,12 @@ class ApiModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(interceptor: Interceptor) =
+    fun provideOkHttpClient(mockServerInterceptor: Interceptor) =
         OkHttpClient.Builder()
             .readTimeout(300, TimeUnit.SECONDS)
             .writeTimeout(300, TimeUnit.SECONDS)
             .connectTimeout(300, TimeUnit.SECONDS)
-            .addInterceptor(interceptor)
+            .addInterceptor(mockServerInterceptor)
             .build()
 
 
